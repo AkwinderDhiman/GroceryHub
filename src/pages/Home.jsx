@@ -1,5 +1,8 @@
 import Header from "../Components/Header";
+import Navbar from "../components/Navbar";
+import Sidebar from "../components/Sidebar";
 import ProductCard from "../Components/ProductCard";
+import products from "../data/products";
 
 const Home = ()=> {
 
@@ -12,8 +15,18 @@ const Home = ()=> {
     return (
        <>
        <Header/>
-      <h2>Product List</h2>
-      <ProductCard product={product} />
+
+      <Navbar />
+       <div className="flex p-6">
+        <Sidebar />
+      <div className="grid grid-cols-3 gap-6">
+
+            {products.map((p) => (
+              <ProductCard key={p.id} product={p} />
+            ))}
+
+          </div>
+        </div>
     </>
     )
 }
