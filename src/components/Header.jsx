@@ -8,6 +8,10 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import EmailIcon from "@mui/icons-material/Email";
+import PhoneIcon from "@mui/icons-material/Phone";
+import LocationCityIcon from "@mui/icons-material/LocationCity";
+import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 
 const cities = [
     "New York", "Los Angeles", "Chicago", "Houston", "Phoenix",
@@ -18,6 +22,19 @@ const cities = [
     "Minneapolis", "Cleveland", "New Orleans", "Arlington", "Bakersfield"
 ];
 
+// Mock user data
+const userData = {
+    name: "John Doe",
+    email: "john.doe@example.com",
+    phone: "+1 (555) 123-4567",
+    location: "New York, NY",
+    memberSince: "January 2023",
+    membership: "Gold Member",
+    totalOrders: 24,
+    totalSpent: "$1,245.50",
+    loyaltyPoints: 5480
+};
+
 function Header() {
     const [language, setLanguage] = useState("English");
     const [currency, setCurrency] = useState("USD");
@@ -25,6 +42,7 @@ function Header() {
     const [locationOpen, setLocationOpen] = useState(false);
     const [selectedLocation, setSelectedLocation] = useState("Select a location");
     const [searchCity, setSearchCity] = useState("");
+    const [profileOpen, setProfileOpen] = useState(false);
 
     const filteredCities = cities.filter(city => 
         city.toLowerCase().includes(searchCity.toLowerCase())
@@ -74,7 +92,10 @@ function Header() {
                     {/* Right Section */}
                     <div className="flex items-center gap-4">
                         <div className="flex gap-4 items-center">
-                            <button className="text-gray-700 hover:text-blue-600">
+                            <button 
+                                onClick={() => setProfileOpen(true)}
+                                className="text-gray-700 hover:text-blue-600 transition"
+                            >
                                 <AccountCircleIcon fontSize="large" />
                             </button>
                             <span className="text-gray-300">|</span>
@@ -124,6 +145,99 @@ function Header() {
                     </div>
                 </div>
             </div>
+
+            {/* Profile Dialog */}
+            <Dialog open={profileOpen} onClose={() => setProfileOpen(false)} maxWidth="sm" fullWidth>
+                <DialogTitle className="bg-blue-900 text-white">
+                    <div className="flex items-center gap-2">
+                        <AccountCircleIcon />
+                        My Profile
+                    </div>
+                </DialogTitle>
+                <DialogContent className="!pt-6">
+                    <div className="space-y-5">
+                        {/* Profile Header */}
+                        <div className="flex items-center gap-4 pb-4 border-b">
+                            <div className="bg-blue-100 rounded-full p-3">
+                                <AccountCircleIcon sx={{ fontSize: 48, color: "#1e40af" }} />
+                            </div>
+                            <div>
+                                <h3 className="font-bold text-lg text-gray-800">{userData.name}</h3>
+                                <p className="text-sm text-blue-600 font-semibold">{userData.membership}</p>
+                            </div>
+                        </div>
+
+                        {/* Contact Information */}
+                        <div>
+                            <h4 className="font-semibold text-gray-700 mb-3">Contact Information</h4>
+                            <div className="space-y-2">
+                                <div className="flex items-center gap-3">
+                                    <EmailIcon className="text-blue-600" fontSize="small" />
+                                    <span className="text-sm text-gray-700">{userData.email}</span>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <PhoneIcon className="text-blue-600" fontSize="small" />
+                                    <span className="text-sm text-gray-700">{userData.phone}</span>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <LocationCityIcon className="text-blue-600" fontSize="small" />
+                                    <span className="text-sm text-gray-700">{userData.location}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Account Stats */}
+                        <div>
+                            <h4 className="font-semibold text-gray-700 mb-3">Account Statistics</h4>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="bg-gray-50 p-3 rounded-lg text-center">
+                                    <p className="text-2xl font-bold text-blue-600">{userData.totalOrders}</p>
+                                    <p className="text-xs text-gray-600 mt-1">Total Orders</p>
+                                </div>
+                                <div className="bg-gray-50 p-3 rounded-lg text-center">
+                                    <p className="text-2xl font-bold text-green-600">{userData.totalSpent}</p>
+                                    <p className="text-xs text-gray-600 mt-1">Total Spent</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Loyalty Points */}
+                        <div className="bg-gradient-to-r from-yellow-50 to-orange-50 p-4 rounded-lg border border-yellow-200">
+                            <div className="flex items-center gap-2 mb-2">
+                                <VerifiedUserIcon className="text-yellow-600" />
+                                <h4 className="font-semibold text-gray-700">Loyalty Points</h4>
+                            </div>
+                            <p className="text-2xl font-bold text-yellow-700">{userData.loyaltyPoints} pts</p>
+                            <p className="text-xs text-gray-600 mt-1">Points available for next purchase</p>
+                        </div>
+
+                        {/* Member Since */}
+                        <div className="bg-blue-50 p-3 rounded-lg text-center border border-blue-200">
+                            <p className="text-xs text-gray-600">Member Since</p>
+                            <p className="font-semibold text-blue-900">{userData.memberSince}</p>
+                        </div>
+
+                        {/* Action Buttons */}
+                        <div className="flex gap-2 pt-4">
+                            <Button 
+                                variant="contained" 
+                                className="!bg-blue-600 !text-white flex-1"
+                                size="small"
+                            >
+                                Edit Profile
+                            </Button>
+                            <Button 
+                                variant="outlined" 
+                                className="!border-blue-600 !text-blue-600 flex-1"
+                                size="small"
+                                onClick={() => setProfileOpen(false)}
+                            >
+                                Close
+                            </Button>
+                        </div>
+                    </div>
+                </DialogContent>
+            </Dialog>
 
             {/* Location Dialog */}
             <Dialog open={locationOpen} onClose={() => setLocationOpen(false)} maxWidth="sm" fullWidth>
