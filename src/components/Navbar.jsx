@@ -143,10 +143,10 @@ export default function Navbar({ toggleSidebar }) {
             <DropdownMenu items={navMenus.shop} />
           </div>
 
-          <a href="#" className="nav-item">
+          <Link to="/meats-seafood" className="nav-item">
             <LocalDiningIcon fontSize="small" />
             MEATS & SEAFOOD
-          </a>
+          </Link>
           <Link to="/bakery" className="nav-item">
             <LocalCafeIcon fontSize="small" />
             BAKERY

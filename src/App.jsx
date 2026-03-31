@@ -6,6 +6,7 @@ import Layout from './pages/Layout';
 import Blog from './components/Blog';
 import Beverages from './components/Beverages';
 import Bakery from './components/Bakery';
+import MeatsSeafood from './components/MeatsSeafood';
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
     <Routes>
           <Route path="/" element={<Layout />}>
             <Route path="home" element={<Home />} />
+            <Route path="meats-seafood" element={<MeatsSeafood />} />
             <Route path="bakery" element={<Bakery />} />
             <Route path="beverages" element={<Beverages />} />
             <Route path="contact" element={<Contact />} />
