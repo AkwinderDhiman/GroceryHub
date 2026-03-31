@@ -12,6 +12,7 @@ import AcUnitIcon from "@mui/icons-material/AcUnit";
 import CookieIcon from "@mui/icons-material/Cookie";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import "./Navbar.css";
+import { Link } from "react-router-dom";
 
 export default function Navbar({ toggleSidebar }) {
   const [categoriesOpen, setCategoriesOpen] = useState(false);
@@ -130,7 +131,9 @@ export default function Navbar({ toggleSidebar }) {
           
           {/* Home with Dropdown */}
           <div className="nav-item-wrapper">
-            <a href="#" className="nav-item">HOME <ExpandMoreIcon fontSize="small" /></a>
+            <Link to="/home" className="nav-item">
+            Home
+          </Link>
             <DropdownMenu items={navMenus.home} />
           </div>
 
@@ -153,7 +156,9 @@ export default function Navbar({ toggleSidebar }) {
             BEVERAGES
           </a>
           <a href="#" className="nav-item">BLOG</a>
-          <a href="#" className="nav-item">CONTACT</a>
+          <Link to="/contact" className="nav-item">
+            CONTACT
+          </Link>
         </nav>
       </div>
     </div>
