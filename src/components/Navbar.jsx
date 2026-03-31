@@ -12,7 +12,7 @@ import AcUnitIcon from "@mui/icons-material/AcUnit";
 import CookieIcon from "@mui/icons-material/Cookie";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import "./Navbar.css";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function Navbar({ toggleSidebar }) {
   const [categoriesOpen, setCategoriesOpen] = useState(false);
@@ -131,36 +131,36 @@ export default function Navbar({ toggleSidebar }) {
           
           {/* Home with Dropdown */}
           <div className="nav-item-wrapper">
-            <Link to="/home" className="nav-item">
-            Home
-          </Link>
+            <NavLink to="/home"  className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}>
+            HOME
+          </NavLink>
             <DropdownMenu items={navMenus.home} />
           </div>
 
           {/* Shop with Dropdown */}
           <div className="nav-item-wrapper">
-            <a href="#" className="nav-item">SHOP <ExpandMoreIcon fontSize="small" /></a>
+            <a href="#"  className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}>SHOP <ExpandMoreIcon fontSize="small" /></a>
             <DropdownMenu items={navMenus.shop} />
           </div>
 
-          <Link to="/meats-seafood" className="nav-item">
+          <NavLink to="/meats-seafood"  className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}>
             <LocalDiningIcon fontSize="small" />
             MEATS & SEAFOOD
-          </Link>
-          <Link to="/bakery" className="nav-item">
+          </NavLink>
+          <NavLink to="/bakery"  className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}>
             <LocalCafeIcon fontSize="small" />
             BAKERY
-          </Link>
-          <Link to="/beverages" className="nav-item">
+          </NavLink>
+          <NavLink to="/beverages"  className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}>
             <LocalBarIcon fontSize="small" />
             BEVERAGES
-          </Link>
-          <Link to="/blog" className="nav-item">
+          </NavLink>
+          <NavLink to="/blog"  className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}>
             BLOG
-          </Link>
-          <Link to="/contact" className="nav-item">
+          </NavLink>
+          <NavLink to="/contact"  className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}>
             CONTACT
-          </Link>
+          </NavLink>
         </nav>
       </div>
     </div>
