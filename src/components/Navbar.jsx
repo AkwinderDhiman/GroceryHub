@@ -147,10 +147,10 @@ export default function Navbar({ toggleSidebar }) {
             <LocalDiningIcon fontSize="small" />
             MEATS & SEAFOOD
           </a>
-          <a href="#" className="nav-item">
+          <Link to="/bakery" className="nav-item">
             <LocalCafeIcon fontSize="small" />
             BAKERY
-          </a>
+          </Link>
           <Link to="/beverages" className="nav-item">
             <LocalBarIcon fontSize="small" />
             BEVERAGES
