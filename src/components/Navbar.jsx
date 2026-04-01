@@ -132,7 +132,7 @@ export default function Navbar({ toggleSidebar }) {
           {/* Home with Dropdown */}
           <div className="nav-item-wrapper">
             <NavLink to="/home"  className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}>
-            HOME
+            HOME  <ExpandMoreIcon fontSize="small" />
           </NavLink>
             <DropdownMenu items={navMenus.home} />
           </div>
