@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
 import Sidebar from "../components/Sidebar";
+import Footer from "../components/Footer";
 
 const Layout = () => {
   const [openSidebar, setOpenSidebar] = useState(true);
@@ -20,6 +21,7 @@ const Layout = () => {
           <Outlet />
         </div>
       </div>
+      <Footer />
     </>
   );
 };
