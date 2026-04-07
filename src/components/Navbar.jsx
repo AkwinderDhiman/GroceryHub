@@ -93,7 +93,7 @@ export default function Navbar({ toggleSidebar }) {
             <a href="#" className="category-item">
               <IconComponent className="category-icon" />
               <span className="category-name">{category.name}</span>
-              {category.submenu && <ChevronRightIcon className="arrow-icon" />}
+            {category.submenu && <ChevronRightIcon className="arrow-icon" />}
             </a>
             {category.submenu && (
               <div className="category-submenu">
@@ -111,7 +111,7 @@ export default function Navbar({ toggleSidebar }) {
   );
 
   return (
-    <div className="hidden md:block bg-white border-b sticky top-0 z-40 shadow-md">
+    <div className="md:block bg-white border-b sticky top-0 z-40 shadow-md">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-0 px-4 py-0">
 
@@ -142,6 +142,9 @@ export default function Navbar({ toggleSidebar }) {
 
             {/* Shop with Dropdown */}
             <div className="nav-item-wrapper transition-all duration-300">
+              <NavLink to="/shop"  className={({ isActive }) => isActive ? "nav-item active transition-all duration-300" : "nav-item transition-all duration-300"}>
+              SHOP  <ExpandMoreIcon fontSize="small" />
+            </NavLink>
               <DropdownMenu items={navMenus.shop} />
             </div>
 
