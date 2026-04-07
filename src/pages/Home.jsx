@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <div className="flex p-6">
       
-      <div className="grid grid-cols-4 md:grid-cols-2 gap-6 w-full">
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
         {products.map((p) => (
           <ProductCard key={p.id} product={p} />
         ))}
