@@ -121,8 +121,6 @@ function Header({ toggleSidebar: toggleSidebarProp }) {
                                     <AccountCircleIcon fontSize="large" />
                                 </button>
                                 <span className="text-gray-300">|</span>
-                                <a href="#" className="text-sm text-gray-700 hover:text-blue-600">Wishlist</a>
-                                <span className="text-gray-300">|</span>
                                 <button className="relative">
                                     <ShoppingCartIcon className="text-blue-900" />
                                     <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">{cart}</span>
@@ -149,7 +147,7 @@ function Header({ toggleSidebar: toggleSidebarProp }) {
                     <div className="max-w-7xl mx-auto flex justify-between items-center">
                         <div className="flex gap-4">
                             <a href="#" className="text-gray-600 hover:text-blue-600">About Us</a>
-                            <a href="#" className="text-gray-600 hover:text-blue-600">Wishlist</a>
+                            <a href="/wishlist" className="text-gray-600 hover:text-blue-600">Wishlist</a>
                             <a href="#" className="text-gray-600 hover:text-blue-600">Order Tracking</a>
                         </div>
                         <div className="flex gap-4 items-center">
