@@ -7,6 +7,7 @@ import Blog from './components/Blog';
 import Beverages from './components/Beverages';
 import Bakery from './components/Bakery';
 import MeatsSeafood from './components/MeatsSeafood';
+import Wishlist from './pages/Wishlist';
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
             <Route path="beverages" element={<Beverages />} />
             <Route path="contact" element={<Contact />} />
             <Route path="blog" element={<Blog />} />
+            <Route path="wishlist" element={<Wishlist />} />
           </Route>
     </Routes>
     </BrowserRouter>
