@@ -1,9 +1,34 @@
-import { Card, CardContent, Button } from "@mui/material";
+import { Card, CardContent, Button, IconButton } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { useState, useEffect } from "react";
 
 export default function ProductCard({ product }) {
+  const [isWishlisted, setIsWishlisted] = useState(false);
   const discount = product.originalPrice ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : 0;
+
+  // Check if product is in wishlist on mount
+  useEffect(() => {
+    const wishlistKey = `wishlist_${product.id}`;
+    const isSaved = localStorage.getItem(wishlistKey);
+    setIsWishlisted(!!isSaved);
+  }, [product.id]);
+
+  const handleWishlistToggle = () => {
+    const wishlistKey = `wishlist_${product.id}`;
+    
+    if (isWishlisted) {
+      // Remove from wishlist
+      localStorage.removeItem(wishlistKey);
+      setIsWishlisted(false);
+    } else {
+      // Add to wishlist - store the entire product object
+      localStorage.setItem(wishlistKey, JSON.stringify(product));
+      setIsWishlisted(true);
+    }
+  };
 
   return (
     <Card className="!rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
@@ -28,6 +53,28 @@ export default function ProductCard({ product }) {
             SALE
           </div>
         )}
+
+        {/* Wishlist Heart Icon */}
+        <IconButton
+          onClick={handleWishlistToggle}
+          sx={{
+            position: "absolute",
+            top: product.onSale ? "45px" : "8px",
+            right: "8px",
+            backgroundColor: "rgba(255, 255, 255, 0.9)",
+            "&:hover": {
+              backgroundColor: "rgba(255, 255, 255, 1)",
+            },
+            padding: "6px",
+          }}
+          size="small"
+        >
+          {isWishlisted ? (
+            <FavoriteIcon sx={{ color: "#ef4444", fontSize: "1.2rem" }} />
+          ) : (
+            <FavoriteBorderIcon sx={{ color: "#6b7280", fontSize: "1.2rem" }} />
+          )}
+        </IconButton>
       </div>
 
       <CardContent className="!p-4">
