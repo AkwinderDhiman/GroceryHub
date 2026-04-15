@@ -17,20 +17,30 @@ export default function Wishlist() {
   useEffect(() => {
     const loadWishlistFromStorage = () => {
       const items = [];
+      const keysToDelete = [];
+      
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
         if (key.startsWith("wishlist_")) {
           try {
             const product = JSON.parse(localStorage.getItem(key));
-            // Validate that product has required fields
-            if (product && product.id && product.name && product.image && product.price) {
+            // Validate that product has all required fields
+            if (product && product.id && product.name && product.image && product.price !== undefined) {
               items.push(product);
+            } else {
+              // Mark corrupted item for deletion
+              keysToDelete.push(key);
             }
           } catch (error) {
             console.error("Error parsing wishlist item:", error);
+            keysToDelete.push(key);
           }
         }
       }
+      
+      // Clean up corrupted items from localStorage
+      keysToDelete.forEach(key => localStorage.removeItem(key));
+      
       setWishlistItems(items);
     };
     
@@ -111,22 +121,47 @@ export default function Wishlist() {
       {/* Wishlist Items Grid */}
       {wishlistItems.length > 0 && (
         <>
-          <Grid container spacing={3} className="mb-12">
+          <Grid container spacing={2} className="mb-12">
             {wishlistItems.map((product) => (
-              <Grid item xs={12} sm={6} md={4} lg={3} key={product.id}>
-                <Card className="h-full flex flex-col hover:shadow-lg transition-shadow">
-                  <CardMedia
-                    component="img"
-                    height={200}
-                    image={product.image}
-                    alt={product.name}
-                    className="object-cover"
-                  />
-                  <CardContent className="flex-1 flex flex-col">
+              <Grid item xs={12} sm={6} lg={3} key={product.id}>
+                <Card className="h-full flex flex-col hover:shadow-lg transition-shadow duration-300">
+                  <Box sx={{ position: 'relative', overflow: 'hidden' }}>
+                    <CardMedia
+                      component="img"
+                      image={product.image}
+                      alt={product.name}
+                      sx={{ 
+                        height: 160,
+                        objectFit: 'cover',
+                        '&:hover': {
+                          transform: 'scale(1.05)',
+                          transition: 'transform 0.3s ease-in-out'
+                        }
+                      }}
+                    />
+                    {product.onSale && (
+                      <Box sx={{
+                        position: 'absolute',
+                        top: 8,
+                        right: 8,
+                        backgroundColor: '#ff6b6b',
+                        color: 'white',
+                        padding: '4px 12px',
+                        borderRadius: '20px',
+                        fontSize: '12px',
+                        fontWeight: 'bold'
+                      }}>
+                        Sale
+                      </Box>
+                    )}
+                  </Box>
+
+                  <CardContent className="flex-1 flex flex-col pb-2">
                     <Typography
-                      variant="h6"
+                      variant="body2"
                       component="div"
-                      className="mb-2 line-clamp-2 font-semibold"
+                      className="line-clamp-2 font-semibold text-sm mb-2"
+                      sx={{ minHeight: '2.5rem' }}
                     >
                       {product.name}
                     </Typography>
@@ -137,48 +172,39 @@ export default function Wishlist() {
                         size="small" 
                         variant="outlined"
                         color="primary"
+                        sx={{ height: 24, fontSize: '11px' }}
                       />
                     </Box>
 
-                    {product.onSale && (
-                      <Box className="mb-2">
-                        <Chip 
-                          label="On Sale" 
-                          size="small" 
-                          color="error"
-                          variant="filled"
-                        />
-                      </Box>
-                    )}
-
-                    {/* <div className="flex items-center justify-between mt-auto mb-3">
-                      <div>
-                        <Typography variant="h6" color="primary" className="font-bold">
-                          ${product.price.toFixed(2)}
+                    <Box className="flex items-center justify-between mt-auto mb-2">
+                      <Box>
+                        <Typography variant="body1" color="primary" className="font-bold">
+                          ${product.price}
                         </Typography>
                         {product.originalPrice && (
                           <Typography 
-                            variant="body2" 
+                            variant="caption" 
                             color="textSecondary" 
-                            sx={{ textDecoration: 'line-through' }}
+                            sx={{ textDecoration: 'line-through', display: 'block' }}
                           >
                             ${product.originalPrice.toFixed(2)}
                           </Typography>
                         )}
-                      </div>
-                      <Typography variant="body2" color="textSecondary">
+                      </Box>
+                      <Typography variant="caption" color="textSecondary">
                         ⭐ {product.rating}
                       </Typography>
-                    </div> */}
+                    </Box>
                   </CardContent>
 
-                  <Box className="px-4 pb-4 flex gap-2">
+                  <Box className="px-3 pb-3 flex gap-1">
                     <Button
                       fullWidth
                       variant="contained"
                       color="primary"
                       startIcon={<ShoppingCartIcon />}
                       size="small"
+                      sx={{ fontSize: '12px', py: 0.5 }}
                       onClick={() => handleAddToCart(product)}
                     >
                       {isMobile ? "Cart" : "Add to Cart"}
@@ -187,8 +213,9 @@ export default function Wishlist() {
                       color="error"
                       onClick={() => handleRemoveFromWishlist(product.id)}
                       size="small"
+                      sx={{ p: 0.75 }}
                     >
-                      <DeleteIcon />
+                      <DeleteIcon sx={{ fontSize: 18 }} />
                     </IconButton>
                   </Box>
                 </Card>
