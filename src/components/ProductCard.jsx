@@ -106,11 +106,11 @@ export default function ProductCard({ product }) {
         <div className="mb-4">
           <div className="flex items-center gap-2">
             <span className="text-lg font-bold text-green-600">
-              ${product.price.toFixed(2)}
+              ${product.price}
             </span>
             {product.originalPrice && (
               <span className="text-sm text-gray-400 line-through">
-                ${product.originalPrice.toFixed(2)}
+                ${product.originalPrice}
               </span>
             )}
           </div>
