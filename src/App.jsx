@@ -8,6 +8,7 @@ import Beverages from './components/Beverages';
 import Bakery from './components/Bakery';
 import MeatsSeafood from './components/MeatsSeafood';
 import Wishlist from './pages/Wishlist';
+import Cart from './pages/Cart';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
             <Route path="contact" element={<Contact />} />
             <Route path="blog" element={<Blog />} />
             <Route path="wishlist" element={<Wishlist />} />
+            <Route path="cart" element={<Cart />} /> 
           </Route>
     </Routes>
     </BrowserRouter>
