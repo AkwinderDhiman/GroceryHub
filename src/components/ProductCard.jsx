@@ -6,6 +6,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useState, useEffect } from "react";
 
 export default function ProductCard({ product }) {
+  const [inCart, setInCart] = useState(false);
   const [isWishlisted, setIsWishlisted] = useState(false);
   const discount = product.originalPrice ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : 0;
 
@@ -14,6 +15,10 @@ export default function ProductCard({ product }) {
     const wishlistKey = `wishlist_${product.id}`;
     const isSaved = localStorage.getItem(wishlistKey);
     setIsWishlisted(!!isSaved);
+
+    const cartKey = `cart_${product.id}`;
+    const isInCart = localStorage.getItem(cartKey);
+    setInCart(!!isInCart);
   }, [product.id]);
 
   const handleWishlistToggle = () => {
@@ -27,6 +32,18 @@ export default function ProductCard({ product }) {
       // Add to wishlist - store the entire product object
       localStorage.setItem(wishlistKey, JSON.stringify(product));
       setIsWishlisted(true);
+    }
+  };
+
+  const handleAddToCartToggle = () => {
+    const cartKey = `cart_${product.id}`;
+    const isInCart = localStorage.getItem(cartKey);
+    if (isInCart) {
+      localStorage.removeItem(cartKey);
+      setInCart(false);
+    } else {
+      localStorage.setItem(cartKey, JSON.stringify(product));
+      setInCart(true);
     }
   };
 
@@ -117,15 +134,28 @@ export default function ProductCard({ product }) {
         </div>
 
         {/* Add to Cart Button */}
-        <Button
-          variant="outlined"
-          fullWidth
-          size="small"
+        {inCart ? (
+          <Button        
+            onClick={handleAddToCartToggle}
+            variant="contained"
+            fullWidth
+            size="small"
+            className="!bg-green-500 !text-white !hover:!bg-green-600"
+          >
+            Remove from Cart
+          </Button>
+        ) : (
+          <Button        
+            onClick={handleAddToCartToggle}
+            variant="outlined"
+            fullWidth
+            size="small"
           className="!text-cyan-500 !border-cyan-300 !rounded-lg !text-xs hover:!bg-cyan-50"
           startIcon={<AddShoppingCartIcon fontSize="small" />}
         >
           Add to cart
         </Button>
+        )}
       </CardContent>
     </Card>
   );
