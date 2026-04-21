@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { Button, Dialog, DialogTitle, DialogContent, TextField } from "@mui/material";
@@ -41,7 +41,7 @@ const userData = {
 function Header({ toggleSidebar: toggleSidebarProp }) {
     const [language, setLanguage] = useState("English");
     const [currency, setCurrency] = useState("USD");
-    const [cart, setCart] = useState(0);
+    const [cartCount, setCartCount] = useState(0);
     const [locationOpen, setLocationOpen] = useState(false);
     const [selectedLocation, setSelectedLocation] = useState("Select a location");
     const [searchCity, setSearchCity] = useState("");
@@ -66,6 +66,37 @@ function Header({ toggleSidebar: toggleSidebarProp }) {
     const handleCloseDrawer = () => {
         setDrawerOpen(false);
     };
+
+     const [cartItems, setCartItems] = useState([]);
+        // Load cart items from localStorage on mount
+        useEffect(() => {
+            const loadCartFromStorage = () => {
+                const items = [];
+                const keysToDelete = [];
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    if (key.startsWith("cart")) {
+                        try {
+                            const product = JSON.parse(localStorage.getItem(key));
+                            // Validate that product has all required fields
+                            if (product && product.id && product.name && product.image && product.price !== undefined) {
+                                items.push(product);
+                            } else {
+                                // Mark corrupted item for deletion
+                                keysToDelete.push(key);
+                            }
+                        } catch (error) {
+                            console.error("Error parsing cart item:", error);
+                            keysToDelete.push(key);
+                        }
+                    }
+                }
+                // Clean up corrupted items from localStorage
+                keysToDelete.forEach(key => localStorage.removeItem(key));
+                setCartItems(items);
+            };
+            loadCartFromStorage();
+        }, []);
     return (
         <>
          <header className="bg-white">
@@ -121,10 +152,12 @@ function Header({ toggleSidebar: toggleSidebarProp }) {
                                     <AccountCircleIcon fontSize="large" />
                                 </button>
                                 <span className="text-gray-300">|</span>
-                                <button className="relative">
-                                    <ShoppingCartIcon className="text-blue-900" />
-                                    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">{cart}</span>
-                                </button>
+                                    <button className="relative" >
+                                        <a href="/cart" className="flex items-center gap-1 text-gray-700 hover:text-blue-600 transition">
+                                            <ShoppingCartIcon className="text-blue-900" />
+                                            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">{cartItems.length}</span>
+                                        </a>
+                                    </button>
                             </div>
                         </div>
                     )}
@@ -133,8 +166,8 @@ function Header({ toggleSidebar: toggleSidebarProp }) {
                     {isMobile && (
                         <button className="relative ml-auto">
                             <ShoppingCartIcon className="text-blue-900" style={{ fontSize: "28px" }} />
-                            {cart > 0 && (
-                                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">{cart}</span>
+                            {cartItems.length > 0 && (
+                                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">{cartItems.length}</span>
                             )}
                         </button>
                     )}
