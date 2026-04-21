@@ -4,7 +4,7 @@ import ProductCard from "./ProductCard";
 export default function Bakery() {
   const bakeryItems = [
     {
-      id: 1,
+      id: 11,
       name: "Chocolate Cake",
       price: "$12.99",
       image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587",  
@@ -14,13 +14,13 @@ export default function Bakery() {
       onSale: true
     },
     {
-      id: 2,
+      id: 12,
       name: "Croissant",
       price: "$2.99",
       image: "https://images.unsplash.com/photo-1509440159596-0249088772ff",
     },
     {
-      id: 3,
+      id: 13,
       name: "Donuts",
       price: "$5.49",
       image: "https://images.unsplash.com/photo-1542826438-bd32f43d626f",
@@ -30,19 +30,19 @@ export default function Bakery() {
       onSale: false
     },
     {
-      id: 4,
+      id: 14,
       name: "Cupcakes",
       price: "$6.99",
       image: "https://images.unsplash.com/photo-1519864600265-abb23847ef2c",
     },
     {
-      id: 5,
+      id: 15,
       name: "Bread Loaf",
       price: "$3.99",
       image: "https://images.unsplash.com/photo-1608198093002-ad4e005484ec",
     },
     {
-      id: 6,
+      id: 16,
       name: "Blueberry Muffin",
       price: "$3.49",
       image: "https://images.unsplash.com/photo-1587735243615-c03f25aaff15",
@@ -52,13 +52,13 @@ export default function Bakery() {
       onSale: true
     },
     {
-      id: 7,
+      id: 17,
       name: "Cookies",
       price: "$4.99",
       image: "https://images.unsplash.com/photo-1499636136210-6f4ee915583e",
     },
     {
-      id: 8,
+      id: 18,
       name: "Cheese Cake",
       price: "$10.99",
       image: "https://images.unsplash.com/photo-1551024601-bec78aea704b",
