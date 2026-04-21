@@ -3,7 +3,7 @@ import ProductCard from "./ProductCard";
 export default function MeatsSeafood() {
   const products = [
     {
-      id: 1,
+      id: 31,
       name: "Fresh Salmon",
       price: "$14.99",
       image: "https://images.unsplash.com/photo-1544025162-d76694265947",
@@ -12,13 +12,13 @@ export default function MeatsSeafood() {
       onSale: true
     },
     {
-      id: 2,
+      id: 32,
       name: "Chicken Breast",
       price: "$9.49",
       image: "https://images.unsplash.com/photo-1604908811797-1f1d3b9c5fbd",
     },
     {
-      id: 3,
+      id: 33,
       name: "Raw Beef Steak",
       price: "$19.99",
       image: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092",
@@ -27,19 +27,19 @@ export default function MeatsSeafood() {
       onSale: true
     },
     {
-      id: 4,
+      id: 34,
       name: "Shrimps",
       price: "$12.99",
       image: "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db",
     },
     {
-      id: 5,
+      id: 35,
       name: "Crab",
       price: "$15.99",
       image: "https://images.unsplash.com/photo-1553621042-f6e147245754",
     },
     {
-      id: 6,
+      id: 36,
       name: "Tuna Fish",
       price: "$13.49",
       image: "https://images.unsplash.com/photo-1514517220039-3c89d6c2c9a4",
