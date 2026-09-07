@@ -3,8 +3,8 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
-import googlePlayImg from "../assets/google-play.webp";
-import APPStoreImg from "../assets/app-store.webp";
+import googlePlayImg from "../../assets/google-play.webp";
+import APPStoreImg from "../../assets/app-store.webp";
 
 
 export default function Footer() {

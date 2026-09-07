@@ -13,7 +13,7 @@ import CookieIcon from "@mui/icons-material/Cookie";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import "./Navbar.css";
 import { NavLink } from "react-router-dom";
-import useResponsive from "../hooks/useResponsive";
+import useResponsive from "../../hooks/useResponsive";
 
 export default function Navbar({ toggleSidebar, activeCategory }) {
   const [categoriesOpen, setCategoriesOpen] = useState(false);

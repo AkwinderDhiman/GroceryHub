@@ -1,4 +1,4 @@
-import ProductCard from "./ProductCard";
+import ProductCard from "../components/product/ProductCard";
 
 export default function MeatsSeafood() {
   const products = [

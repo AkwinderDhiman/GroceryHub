@@ -13,8 +13,8 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import MenuIcon from "@mui/icons-material/Menu";
-import TemporaryDrawer from "../pages/Drawer";
-import useResponsive from "../hooks/useResponsive";
+import TemporaryDrawer from "./Drawer";
+import useResponsive from "../../hooks/useResponsive";
 
 const cities = [
     "New York", "Los Angeles", "Chicago", "Houston", "Phoenix",
