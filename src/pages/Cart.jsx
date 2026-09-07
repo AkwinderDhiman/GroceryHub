@@ -1,30 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { getCartItems } from "../lib/cart";
+import { startCheckout } from "../lib/checkout";
 
 export default function Cart() {
+  const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  // Load from localStorage
   useEffect(() => {
-    const items = [];
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      if (key.startsWith("cart")) {
-        try {
-          const product = JSON.parse(localStorage.getItem(key));
-          if (product) {
-            items.push({
-              ...product,
-              quantity: product.quantity || 1,
-            });
-          }
-        } catch {}
-      }
-    }
-    setCartItems(items);
+    setCartItems(getCartItems());
   }, []);
 
-  // ✅ Update quantity
+  const persistCart = (items) => {
+    items.forEach((item) => {
+      localStorage.setItem(
+        `cart_${item.id}`,
+        JSON.stringify(item)
+      );
+    });
+    setCartItems(items);
+  };
+
   const updateQuantity = (id, type) => {
     const updated = cartItems.map((item) => {
       if (item.id === id) {
@@ -34,18 +33,26 @@ export default function Cart() {
       }
       return item;
     });
-    setCartItems(updated);
+    persistCart(updated);
   };
 
-  // ✅ Remove item
   const removeItem = (id) => {
-    const cartKey = `cart_${id}`;
-    localStorage.removeItem(cartKey);
-    const updated = cartItems.filter((item) => item.id !== id);
-    setCartItems(updated);
+    localStorage.removeItem(`cart_${id}`);
+    setCartItems(cartItems.filter((item) => item.id !== id));
   };
 
-  // ✅ Subtotal
+  const handleCheckout = async () => {
+    setLoading(true);
+    setError("");
+
+    try {
+      await startCheckout(cartItems);
+    } catch (err) {
+      setError(err.message);
+      setLoading(false);
+    }
+  };
+
   const subtotal = cartItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
@@ -98,7 +105,9 @@ export default function Cart() {
                 <div className="col-span-2 flex items-center gap-4">
                   <img
                     src={item.image}
+                    alt={item.name}
                     className="w-16 h-16 object-contain"
+                    onClick={() => navigate(`/product/${item.id}`)}
                   />
                   <p className="text-sm">{item.name}</p>
                 </div>
@@ -182,8 +191,23 @@ export default function Cart() {
               <span>${subtotal.toFixed(2)}</span>
             </div>
 
-            <button className="w-full bg-red-500 text-white py-3 rounded-lg hover:bg-red-600">
-              Proceed to checkout
+            {error && (
+              <p className="text-red-500 text-sm mb-3">{error}</p>
+            )}
+
+            <button
+              onClick={handleCheckout}
+              disabled={loading}
+              className="w-full bg-red-500 text-white py-3 rounded-lg hover:bg-red-600 disabled:opacity-60 flex items-center justify-center gap-2"
+            >
+              {loading ? (
+                <>
+                  <CircularProgress size={20} color="inherit" />
+                  Redirecting to Stripe...
+                </>
+              ) : (
+                "Proceed to checkout"
+              )}
             </button>
           </div>
         </div>

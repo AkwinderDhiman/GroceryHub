@@ -10,6 +10,8 @@ import MeatsSeafood from './components/MeatsSeafood';
 import Wishlist from './pages/Wishlist';
 import Cart from './pages/Cart';
 import ProductDetail from './components/ProductDetail';
+import CheckoutSuccess from './pages/CheckoutSuccess';
+import CheckoutCancel from './pages/CheckoutCancel';
 
 function App() {
 
@@ -28,6 +30,8 @@ function App() {
             <Route path="blog" element={<Blog />} />
             <Route path="wishlist" element={<Wishlist />} />
             <Route path="cart" element={<Cart />} />
+            <Route path="checkout/success" element={<CheckoutSuccess />} />
+            <Route path="checkout/cancel" element={<CheckoutCancel />} />
             <Route path="/product/:id" element={<ProductDetail />} />
           </Route>
     </Routes>
